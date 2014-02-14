@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, 
+        					  initial-scale=1, 
+                              maximum-scale=1, 
+                              minimum-scale=1, 
+                              target-densitydpi=device-dpi" />
+        <title>iStore</title>
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" href="jQueryMobile/jquery.mobile-1.4.0-alpha.2.css" type="text/css" />
+        <script type="text/javascript" src="cordova.js"></script>
+        <!--
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCFJL3OI5YnrRskGd_6Pq-YNa3q0uRKG2U&sensor=false"></script>
+        -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        
+        <script src="jQueryMobile/jquery-2.0.3.js"></script>
+        <script src="jQueryMobile/jquery.mobile-1.4.0-alpha.2.js"></script>
+        
+        <script src="iStore/indexBaseJS.js"></script>
+        <script src="iStore/storePageBase.js"></script>
+        <script src="iStore/tools.js"></script>
+        
+        <link media="screen" rel="stylesheet" type="text/css" href="iStore/jquery.mobile.iscrollview.css" />
+    	<link media="screen" rel="stylesheet" type="text/css" href="iStore/jquery.mobile.iscrollview-pull.css" />
+        <script type="text/javascript" src="iStore/iscroll.js"></script>
+		<script type="text/javascript" src="iStore/jquery.mobile.iscrollview.js"></script>
+    	<script type="text/javascript" src="iStore/pull-example.js"></script>
+        <script type="text/javascript" src="iStore/jquery.tinyMap-2.5.3.js"></script>
+    </head>
+    
+    <body>
+<!-- storelistPqge -->
+    <div class="mainPage" data-role="page" id="storeListPage">
+        <div class="pageHeader" data-id="header" 
+                                data-role="header" data-tap-toggle="false" data-transition="none">
+            <div class="searchBar">
+                <input data-type="search" class="searchInput" onChange="" placeholder="Filter items..." name="storeList">
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+        </div>
+  
+        <div data-iscroll="" data-role="content" class="pageContent" id="sroteListPageContent">
+            <div class="iscroll-pulldown">
+                <span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+            </div>
+            <!--
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            -->
+            <ul data-role="listview" id="storeList"> 
+            <!--
+                <li id="storeId" onClick="getStoreId(this);">
+                    <a href="#storePage" data-transition="slide" data-direction="right">
+                        <img src="img/listView.png" alt="">
+                        <p class="storeList_text" id="list_storeName">StoreName</p>
+                        <p class="storeList_text" id="list_distance">Distant</p>
+                    </a>
+                </li>
+            -->
+            </ul>
+            <!--
+            <div class="iscroll-pullup">
+              <span class="iscroll-pull-icon"></span>
+              <span class="iscroll-pull-label" data-iscroll-loading-text="Custom loading text" 
+                                               data-iscroll-pulled-text="Custom pulled text">Custom reset text</span>
+            </div>
+            -->
+        
+        </div>
+    </div>
+
+<!-- mapPage -->        
+    <div data-role="page" id="mapPage" class="mainPage">
+        <!--
+            <div class="pageHeader" data-id="header" 
+                                    data-role="header" data-tap-toggle="false" data-transition="none">
+                <h1>地圖</h1>
+                <a href="#" data-role="button" class="ui-btn-left" id="menuButton">Menu</a>
+            </div>
+        -->
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            <div data-role="content" id="map-canvas">
+            </div>
+    </div>
+
+<!-- storePage -->         
+    <div data-role="page" id="storePage" class="mainPage">
+        <a href="#" data-role="button" class="ui-btn-left" data-rel="back" id="backButton"></a>
+        <a href="#" data-role="button" class="ui-btn-right" id="shareButton"></a>
+        
+        <div data-role="content" id="storePageContent">
+            <div id="storePageHeader">
+                <h1>商店資訊</h1>
+            </div>
+            
+            <div id="nav">
+                <ul id="indicator">
+                </ul>
+            </div>
+        
+            <div id="wrapper1">  
+                <div id="scroller1">
+                    <ul id="thelist">
+                    </ul>
+                </div>
+            </div>
+            
+            
+        <div id="storeInfo">
+                <div id="storeDataArea">
+                    <div class="storeitems">
+                        <img src="img/itemIcon.png" class="storeTexticons">
+                        <p class="storeText" id="storePage_storeName">愛德華測試</p>
+                    </div>
+                    <div class="storeitems">
+                        <img src="img/locationIcon.png" class="storeTexticons">
+                        <p class="storeText" id="storePage_storeAddr">台中市北區一中街162-3號</p>
+                    </div>
+                    <div class="storeitems">
+                        <img src="img/telIcon.png" class="storeTexticons">
+                        <p class="storeText" id="storePage_storeTel">0986-937937</p>
+                    </div>
+                    <div  class="storeitems">
+                        <img src="img/calenderIcon.png" class="storeTexticons">
+                        <p class="storeText" id="storePage_year">1年半</p>
+                    </div>
+                    <div class="hiddenItems">
+                        <p class="storeText" id="storePage_storeId">E999</p>
+                        <p class="storeText" id="storePage_storeType">衣</p>
+                        <img class="storeText" id="storePage_storeImg" 
+                             src="http://www.walker-plus.com/application/views/public/uploads/A/A01-1.jpg">
+                    </div>
+                </div><!--storeDataArea-->
+                <img id="mapImg" src="">
+            </div>
+        </div>
+        
+        <a data-role="button" id="favoriteButton" onClick="favoritedHandler();">收藏</a>
+    </div>
+ 
+<!--This is subMenu-->
+    <div data-role="content" id="subMenuPage">
+    	<div id="logoArea">
+        	<img id="personalPhotoFrame" src="">
+            <img id="personalPhoto" src="img/img/user.png">
+            <p id="personalName">Fishsaut</p>
+            <div id="locationInfo">
+            	<img id="logoLocationImg" src="img/img/site.png">Taichung, TW
+            </div>
+        </div>
+        <div id="menuArea">
+            <ul data-role="listview">
+            <!--
+                <li class="subMenu">
+                    <img id="personalPhotoFrame" src="img/personalPhotoFrame.png">
+                    <img id="personalPhoto" src="img/personalImg.png">
+                    <p id="personalName"></p>
+                </li>
+            -->
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/home.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">首頁(地圖)</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/list.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">店家清單</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/ad.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">優惠(活動廣告)</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/like.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">我的收藏</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/notes.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">記錄</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/set.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">設定</div></a>
+                </li>
+                <li class="subMenu">
+                    <img class="subListImg" src="img/img/home.png">
+                    <a href="#" onClick="changePage(this)"><div class="subMenuItem">TinyMap</div></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+        
+<!-- historyPage -->
+	<div class="mainPage" data-role="page" id="historyPage">
+        <div class="pageHeader" data-id="header" 
+                                data-role="header" data-tap-toggle="false"  data-transition="none">
+            <div class="searchBar">
+                <input type="search" class="searchInput" onChange="" placeholder="Filter items..." name="historyList">
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+        </div>
+  
+        <div data-iscroll="" data-role="content" id="historyPageContent">
+            <!--
+            <div class="iscroll-pulldown">
+                <span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            -->
+            <ul data-role="listview" id="historyList"> 
+            <!--
+                <li id="storeId" onClick="getStoreId(this);">
+                    <a href="#storePage" data-transition="slide" data-direction="right">
+                        <img src="img/listView.png" alt="">
+                        <p class="storeList_text" id="list_storeName">StoreName</p>
+                        <p class="storeList_text" id="list_distance">Distant</p>
+                    </a>
+                </li>
+            -->
+            </ul>
+        </div>
+    </div>
+        
+<!-- favoritePage -->
+	<div class="mainPage" data-role="page" id="favoritePage">
+        <div class="pageHeader" data-id="header" 
+                                data-role="header" data-tap-toggle="false"  data-transition="none">
+            <div class="searchBar">
+                <input data-type="search" class="searchInput" onChange="" placeholder="Filter items..." name="favoritList">
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+        </div>
+  
+        <div data-iscroll="" data-role="content" id="favoritePageContent">
+            <!--
+            <div class="iscroll-pulldown">
+                <span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            -->
+            <ul data-role="listview" id="favoriteList"> 
+            <!--
+                <li id="storeId" onClick="getStoreId(this);">
+                    <a href="#storePage" data-transition="slide" data-direction="right">
+                        <img src="img/listView.png" alt="">
+                        <p class="storeList_text" id="list_storeName">StoreName</p>
+                        <p class="storeList_text" id="list_distance">Distant</p>
+                    </a>
+                </li>
+            -->
+            </ul>
+        </div>
+    </div>
+        
+<!-- onsalePage -->
+	<div class="mainPage" data-role="page" id="onsalePage">
+        <div class="pageHeader" data-id="header" 
+                                data-role="header" data-tap-toggle="false" data-transition="none">
+            <div class="searchBar">
+                <input data-type="search" class="searchInput" onChange="" placeholder="Filter items..." name="onsaleList">
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+        </div>
+  
+        <div data-iscroll="" data-role="content" id="onsalePageContent">
+            <!--
+            <div class="iscroll-pulldown">
+                <span class="iscroll-pull-icon"></span><span class="iscroll-pull-label"></span>
+            </div>
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            -->
+            <ul data-role="listview" id="onsaleList"> 
+            <!--
+                <li id="storeId" onClick="getStoreId(this);">
+                    <a href="#storePage" data-transition="slide" data-direction="right">
+                        <img src="img/listView.png" alt="">
+                        <p class="storeList_text" id="list_storeName">StoreName</p>
+                        <p class="storeList_text" id="list_distance">Distant</p>
+                    </a>
+                </li>
+            -->
+            </ul>
+        </div>
+    </div>
+        
+<!-- mapPage2 -->
+	<div data-role="page" id="mapPage2" class="mainPage">
+        <!--
+            <div class="pageHeader" data-id="header" 
+                                    data-role="header" data-tap-toggle="false" data-transition="none">
+                <h1>地圖</h1>
+                <a href="#" data-role="button" class="ui-btn-left" id="menuButton">Menu</a>
+            </div>
+        -->
+            <a href="#" data-role="button" class="ui-btn-left" id="menuButton"></a>
+            <div data-role="content" id="map-canvas2">
+            </div>
+    </div>
+            
+            <!--
+            <script type="text/javascript" src="js/index.js"></script>
+            <script type="text/javascript">
+                app.initialize();
+            </script>
+           	-->
+    </body>
+</html>
